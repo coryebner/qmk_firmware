@@ -1,71 +1,77 @@
 #include QMK_KEYBOARD_H
 
+#define ______ KC_TRNS
+
 enum layers {
-    STD,
-    STD_SPACE,
-    STD_FN,
-    STD_LWR,
-    STD_RSE,
-    BASE,
-    BASE_FN,
-    BASE_FN2
+    DEFAULT,
+	GAME,
+	SFT_FN,
+	SPC_FN,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [STD] = LAYOUT_60_ansi(
-		KC_GRV, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,           KC_BSPC,
-		KC_TAB,           KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-		LCTL_T(KC_ESC),          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
-		KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,
-		KC_LCTL, MO(STD_LWR), KC_LALT,                   KC_SPC,                             KC_RALT, MO(STD_RSE), KC_RCTL, MO(STD_FN)),
 
-    [STD_LWR] = LAYOUT_60_ansi(
-		KC_GESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,           KC_DEL,
-		KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_HOME, KC_PGDN, KC_PGUP, KC_END,   KC_NO,   KC_NO, KC_NO, KC_NO,
-		KC_CAPS,          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_NO, KC_NO, KC_NO,
-		KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_NO,          KC_NO,
-		KC_LCTL, KC_LGUI,          KC_LALT,                   KC_SPC,                             KC_RALT,  KC_RGUI,          KC_RCTL,   MO(STD_FN)),
+/* DEFAULT 
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
+ * │ESC│ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 0 │ - │ = │ \ │ ` │
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┤
+ * │ TAB │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │ [ │ ] │ BKSP│
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤
+ * │ CTRL │ A │ S │ D │ F │ G │ H │ J │ K │ L │ ; │ ' │ ENTER  │
+ * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┤
+ * │ SHIFT  │ Z │ X │ C │ V │ B │ N │ M │ , │ . │ / │ SHIFT│LYR│
+ * ├────┬───┴┬──┴─┬─┴───┴───┴┬──┴─┬─┴───┴──┬┴───┼───┴┬────┬┴───┤
+ * │CTL │ OS │ALT │ SPACE    │ FN │ SPACE  │ALT │ OS │CTRL│GAME│
+ * └────┴────┴────┴──────────┴────┴────────┴────┴────┴────┴────┘
+ */
+  [DEFAULT] = LAYOUT_60_calbatr0ss(
+      KC_ESC,  KC_1,    KC_2, KC_3,    KC_4,   KC_5, KC_6,  KC_7, KC_8,   KC_9,    KC_0,   KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,
+      KC_TAB,           KC_Q, KC_W,    KC_E,   KC_R, KC_T,  KC_Y, KC_U,   KC_I,    KC_O,   KC_P,    KC_LBRC, KC_RBRC, KC_BSPC,
+      LCTL_T(KC_ESC),   KC_A, KC_S,    KC_D,   KC_F, KC_G,  KC_H, KC_J,   KC_K,    KC_L,   KC_SCLN, KC_QUOT, KC_ENT,
+      KC_LSFT,          KC_Z, KC_X,    KC_C,   KC_V, KC_B,  KC_N, KC_M,   KC_COMM, KC_DOT, KC_SLSH,          KC_RSFT, MO(SFT_FN),
+      KC_LCTL, KC_LGUI,       KC_LALT, KC_SPC,       MO(SPC_FN),       KC_SPC, KC_RALT,         KC_RGUI, KC_RCTL,  TG(GAME)
+	),
 
-    [STD_RSE] = LAYOUT_60_ansi(
-		KC_GESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,           KC_DEL,
-		KC_NO,            KC_PSCR, KC_NO,   KC_INS,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO,
-		KC_CAPS,          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_NO, KC_NO, KC_NO,
-		KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_NO,          KC_NO,
-		KC_LCTL, KC_LGUI,          KC_LALT,                   KC_SPC,                             KC_RALT, KC_RGUI,          KC_RCTL,   MO(STD_FN)),
 
-    [STD_SPACE] = LAYOUT_60_ansi(
-		KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,           KC_DEL,
-		KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO,
-		KC_CAPS,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_NO, KC_NO, KC_NO,
-		KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_NO,          KC_NO,
-		KC_LCTL, KC_LGUI,          KC_LALT,                   KC_SPC,                             KC_RALT, KC_RGUI,          KC_RCTL,   MO(STD_FN)),
+/* GAME
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
+ * │ESC│ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 0 │ - │ = │ \ │ ` │
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┤
+ * │ TAB │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │ [ │ ] │ BKSP│
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤
+ * │ CTRL │ A │ S │ D │ F │ G │ H │ J │ K │ L │ ; │ ' │ ENTER  │
+ * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┤
+ * │ SHIFT  │ Z │ X │ C │ V │ B │ N │ M │ , │ . │ / │ SHIFT│LYR│
+ * ├────┬───┴┬──┴─┬─┴───┴───┴┬──┴─┬─┴───┴──┬┴───┼───┴┬────┬┴───┤
+ * │CTL │ CTL│ALT │ SPACE    │ FN │ SPACE  │ALT │ OS │CTRL│DEFT│
+ * └────┴────┴────┴──────────┴────┴────────┴────┴────┴────┴────┘
+ */
+  [GAME] = LAYOUT_60_calbatr0ss(
+      KC_ESC,  KC_1,    KC_2, KC_3,    KC_4,   KC_5, KC_6,  KC_7, KC_8,   KC_9,    KC_0,   KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,
+      KC_TAB,           KC_Q, KC_W,    KC_E,   KC_R, KC_T,  KC_Y, KC_U,   KC_I,    KC_O,   KC_P,    KC_LBRC, KC_RBRC, KC_BSPC,
+      KC_LCTL,          KC_A, KC_S,    KC_D,   KC_F, KC_G,  KC_H, KC_J,   KC_K,    KC_L,   KC_SCLN, KC_QUOT, KC_ENT,
+      KC_LSFT,          KC_Z, KC_X,    KC_C,   KC_V, KC_B,  KC_N, KC_M,   KC_COMM, KC_DOT, KC_SLSH,          KC_RSFT, MO(SFT_FN),
+      KC_CAPS, KC_LCTL,       KC_LALT, KC_SPC,       MO(SPC_FN),       KC_SPC, KC_RALT,         KC_RGUI, KC_RCTL,  TG(DEFAULT)
+	),
 
-	[STD_FN] = LAYOUT_60_ansi(
-		KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,           KC_DEL,
-		KC_TRNS,          RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_TRNS, KC_PSCR, KC_SLCK, KC_PAUS, RESET,
-		KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_INS,  KC_HOME, KC_PGUP, KC_TRNS,
-		KC_TRNS,          KC_TRNS, KC_TRNS, BL_DEC,  BL_TOGG, BL_INC,  BL_STEP, KC_TRNS, KC_DEL,  KC_END,  KC_PGDN,          KC_TRNS,
-		TO(BASE), KC_TRNS,          KC_TRNS,                   KC_TRNS,                            KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS),
-
-    [BASE] = LAYOUT_60_ansi(
-		KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,           KC_BSPC,
-		KC_TAB,           KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-		KC_CAPS,          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
-		KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,
-		KC_LCTL, KC_LGUI,          KC_LALT,                   KC_SPC,                         KC_RALT, KC_RGUI,          KC_RCTL,   MO(BASE_FN2)),
-
-    [BASE_FN] = LAYOUT_60_ansi(
-		KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,           KC_DEL,
-		KC_TAB,           KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-		KC_CAPS,          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
-		KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,
-		KC_LCTL, KC_LGUI,          KC_LALT,                   KC_SPC,                             KC_RALT, KC_RGUI,          MO(BASE_FN2),   KC_RCTL),
-
-	[BASE_FN2] = LAYOUT_60_ansi(
-		KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,           KC_DEL,
-		KC_TRNS,          RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_TRNS, KC_PSCR, KC_SLCK, KC_PAUS, RESET,
-		KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_INS,  KC_HOME, KC_PGUP, KC_TRNS,
-		KC_TRNS,          KC_TRNS, KC_TRNS, BL_DEC,  BL_TOGG, BL_INC,  BL_STEP, KC_TRNS, KC_DEL,  KC_END,  KC_PGDN,          KC_TRNS,
-		TO(STD), KC_TRNS,          KC_TRNS,                   KC_TRNS,                            KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS),
-
+/* SPC FN
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
+ * │   │F1 │F2 │F3 │F4 │F5 │F6 │F7 │F8 │F9 │F10│F11│F12│PRT│SLK│
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┤
+ * │     │   │   │   │   │   │HOM│PDN│PUP│END│   │   │   │ DEL │
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤
+ * │      │   │   │   │   │   │LFT│DWN│UP │RHT│   │   │ ENTER  │
+ * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┤
+ * │        │   │   │   │   │   │   │   │   │   │   |      │   │
+ * ├────┬───┴┬──┴─┬─┴───┴───┴┬──┴─┬─┴───┴──┬┴───┼───┴┬────┬┴───┤
+ * │    │    │    │          │    │        │    │    │    │    │
+ * └────┴────┴────┴──────────┴────┴────────┴────┴────┴────┴────┘
+ */
+  [SPC_FN] = LAYOUT_60_calbatr0ss(
+      ______,  KC_F1,   KC_F2,  KC_F3,     KC_F4,    KC_F5,  KC_F6,   KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,
+      ______,           ______, ______,    ______,   ______, ______,  KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   ______,  ______,  ______, KC_DEL,
+      ______,           ______, ______,    ______,   ______, ______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT, ______,  ______,  ______,
+      ______,           ______, ______,    ______,   ______, ______,  ______,   ______,   ______,   KC_PAUS,  ______,           ______, ______,
+      ______,  ______,          ______,    ______,           ______,            ______,             ______,   ______,  ______,  ______
+	),
 };

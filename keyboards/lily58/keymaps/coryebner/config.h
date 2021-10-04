@@ -26,12 +26,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-// mod tap
-#define IGNORE_MOD_TAP_INTERRUPT  // Prevent normal rollover on alphas from accidentally triggering mods
-#define TAPPING_FORCE_HOLD        // Enable rapid switch from tap to hold, disables double tap hold auto-repeat
-// #define PERMISSIVE_HOLD           // Apply the modifier on keys that are tapped during a short hold of a modtap
-#define TAPPING_TERM 200
-
 #define PREVENT_STUCK_MODIFIERS
 
 #undef RGBLED_NUM

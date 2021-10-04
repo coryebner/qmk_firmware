@@ -1,28 +1,7 @@
-#include QMK_KEYBOARD_H
-
-enum layer_number {
-  _QWERTY = 0,
-  _ADJUST,
-  _NAV,
-  _NUM,
-  _FUNC,
-  _GAME
-};
+#include "coryebner.h"
 
 #define LCTL_ESC LCTL_T(KC_ESC)
 #define RSFT_ENT RSFT_T(KC_ENT)
-
-// Left-hand home row mods
-#define GUI_A LGUI_T(KC_A)
-#define ALT_S LALT_T(KC_S)
-#define CTL_D LCTL_T(KC_D)
-#define SFT_F LSFT_T(KC_F)
-
-// Right-hand home row mods
-#define SFT_J RSFT_T(KC_J)
-#define CTL_K RCTL_T(KC_K)
-#define ALT_L LALT_T(KC_L)
-#define GUI_SCLN RGUI_T(KC_SCLN)
 
 #define NAV_SPC LT(_NAV, KC_SPC)
 #define NUM_SPC LT(_NUM, KC_SPC)
@@ -50,12 +29,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  */
 
- [_QWERTY] = LAYOUT( \
-  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL, \
-  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-  LCTL_ESC, KC_A,   ALT_S,   CTL_D,   SFT_F,   KC_G,                     KC_H,    SFT_J,   CTL_K,   ALT_L,   KC_SCLN, KC_QUOT, \
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RSFT_ENT, \
-                        KC_LGUI, KC_LALT, NUM_TAB, NAV_BSPC, NUM_SPC, NAV_ENT, MO(_FUNC), TG(_GAME) \
+ [_ALPHA] = LAYOUT_lily58_wrapper( \
+  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL, \
+  KC_TAB,   _________________QWERTY_L1_________________,                     _________________QWERTY_R1_________________, KC_BSPC, \
+  LCTL_ESC, _________________QWERTY_L2_________________,                     _________________QWERTY_R2_________________, KC_QUOT, \
+  KC_LSFT,  _________________QWERTY_L3_________________, KC_LBRC,  KC_RBRC,  _________________QWERTY_R3_________________, RSFT_ENT, \
+                        KC_LGUI, KC_LALT, ____THUMB_L____, ____THUMB_R____, _______, _______ \
 ),
 /* GAME
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -72,12 +51,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  */
 
- [_GAME] = LAYOUT( \
+ [_GAME] = LAYOUT_lily58_wrapper( \
   KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL, \
-  KC_TAB,   KC_T,   KC_Q,    KC_W,    KC_E,    KC_R,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-  KC_G,  KC_LSFT,   KC_A,    KC_S,    KC_D,    KC_F,                     KC_H,    KC_J,    KC_K,    KC_L,   KC_SCLN, KC_QUOT, \
-  KC_B,  KC_LCTL,   KC_Z,    KC_X,    KC_C,    KC_V, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RSFT_ENT, \
-                        KC_GRV, KC_LALT, MO(_FUNC), KC_SPC,   KC_BSPC,  KC_SPC,  MO(_FUNC), TG(_GAME) \
+  KC_TAB, _________________GAME_L1___________________,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
+  KC_G,   _________________GAME_L1___________________,                     KC_H,    KC_J,    KC_K,    KC_L,   KC_SCLN, KC_QUOT, \
+  KC_B,   _________________GAME_L1___________________, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RSFT_ENT, \
+                            KC_GRV, KC_LALT, __GAME_THUMB_L__, __GAME_THUMB_R__, _______, _______ \
 ),
 /* NUM
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -93,11 +72,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
-[_NUM] = LAYOUT( \
-  _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______, _______,\
-  KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_PIPE, \
-  KC_CAPS, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD, \
-  KC_LSFT, KC_EQL,  KC_UNDS, KC_LBRC, KC_LCBR, KC_LPRN, KC_LBRC, KC_RBRC, KC_RPRN, KC_RCBR, KC_RBRC, KC_MINS, KC_PLUS, _______, \
+[_LOWER] = LAYOUT_lily58_wrapper( \
+  _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______,  _______,\
+  KC_GRV,  _________________SYMBOL_L1_________________,                   _________________SYMBOL_R1_________________, KC_PIPE, \
+  KC_CAPS, _________________SYMBOL_L2_________________,                   _________________SYMBOL_R2_________________, KC_TILD, \
+  KC_LSFT, _________________SYMBOL_L3_________________, KC_LBRC, KC_RBRC, _________________SYMBOL_R3_________________, _______, \
                              _______, _______, _______, _______, _______,  _______, _______, _______\
 ),
 /* NAV
@@ -114,11 +93,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
-[_NAV] = LAYOUT( \
+[_RAISE] = LAYOUT_lily58_wrapper( \
   _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______, _______,\
-  _______, _______, _______, _______, _______, _______,                   KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, _______, \
-  _______, _______, _______, _______, _______, _______,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,_______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, KC_PSCR, KC_SLCK, KC_PAUS, _______,_______, _______, \
+  _______, _________________NAV_L1____________________,                   _________________NAV_R1____________________, _______, \
+  _______, _________________NAV_L2____________________,                   _________________NAV_R2____________________, _______, \
+  _______, _________________NAV_L3____________________, _______, _______, _________________NAV_R3____________________, _______, \
                              _______, _______, _______, _______, _______,  _______, _______, _______\
 ),
 /* FUNC
@@ -135,34 +114,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
-[_FUNC] = LAYOUT( \
-  _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______, _______,\
-  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, \
-  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,                    _______, _______, _______,_______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,_______, _______, _______, \
+[_ADJUST] = LAYOUT_lily58_wrapper( \
+  _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______,  _______,\
+  _______, _________________ADJUST_L1_________________,                   _________________ADJUST_R1_________________, _______, \
+  _______, _________________ADJUST_L2_________________,                   _________________ADJUST_R2_________________, _______, \
+  _______, _________________ADJUST_L3_________________, _______, _______, _________________ADJUST_R3_________________, _______, \
                              _______, _______, _______, _______, _______,  _______, _______, _______\
-),
-/* ADJUST
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      |      |RGB ON| HUE+ | SAT+ | VAL+ |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |      | MODE | HUE- | SAT- | VAL- |
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
- *                   |      |      |      |/       /         \      \ |      |      |      |
- *                   `----------------------------'           '------''--------------------'
- */
-  [_ADJUST] = LAYOUT( \
-  TO(_QWERTY), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-  TO(_GAME), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
-                             _______, _______, _______, _______, _______,  _______, _______, _______ \
-  )
+)
 };
 
 // layer_state_t layer_state_set_user(layer_state_t state) {
@@ -205,12 +163,12 @@ void oled_task_user(void) {
 }
 #endif // OLED_DRIVER_ENABLE
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-#ifdef OLED_DRIVER_ENABLE
-    // set_keylog(keycode, record);
-#endif
-    // set_timelog();
-  }
-  return true;
-}
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//   if (record->event.pressed) {
+// #ifdef OLED_DRIVER_ENABLE
+//     // set_keylog(keycode, record);
+// #endif
+//     // set_timelog();
+//   }
+//   return true;
+// }
